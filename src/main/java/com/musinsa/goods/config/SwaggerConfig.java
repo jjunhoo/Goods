@@ -25,10 +25,10 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
-    // TODO : http://localhost:8080/swagger-ui.html
+    // http://localhost:8080/swagger-ui.html
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Goods API")
+                .title("Musinsa Goods API")
                 .description("Musinsa Goods API")
                 .version("1.0")
                 .contact(new Contact("Help", "https://www.musinsa.com", "help@musinsa.com"))

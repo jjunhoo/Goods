@@ -2,6 +2,7 @@ package com.musinsa.goods.controller;
 
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.service.GoodsService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Api(tags = "상품 정보", description = "상품 정보를 등록 및 조회할 수 있습니다.")
 @RestController
 @RequiredArgsConstructor
 public class GoodsController {
