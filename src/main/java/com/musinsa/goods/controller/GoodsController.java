@@ -2,6 +2,7 @@ package com.musinsa.goods.controller;
 
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.service.GoodsService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +26,14 @@ public class GoodsController {
     // TODO : 상품 등록
 
     // TODO : 상품 조회 (단건 : 상품번호)
+    @ApiOperation(value = "상품 조회", response = Goods.class, notes = "상품 번호를 통해 해당 상품의 상품 정보를 조회할 수 있습니다.")
     @GetMapping(value = "/v1/goods/{goodsNo}")
     public Goods findByGoodsNo(@PathVariable("goodsNo") Long goodsNo) {
         return goodsService.findByGoodsNo(goodsNo);
     }
 
     // TODO : 상품 조회 (다건 : 업체 아이디)
+    @ApiOperation(value = "상품 조회", response = Goods.class, notes = "업체 아이디를 통해 해당 업체의 상품 정보를 조회할 수 있습니다.")
     @GetMapping(value = "/v1/companyGoods/{comId}")
     public List<Goods> findByComId(@PathVariable("comId") String comId) {
         return goodsService.findByComId(comId);

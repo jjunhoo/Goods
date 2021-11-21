@@ -1,5 +1,6 @@
 package com.musinsa.goods.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,17 +10,23 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "goods")
 public class Goods {
+    @ApiModelProperty(value = "상품번호", position = 1)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "goods_no") // 상품번호
+    @Column(name = "goods_no")
     private Long goodsNo;
-    @Column(name = "goods_nm") // 상품명
+    @ApiModelProperty(value = "상품명", position = 2)
+    @Column(name = "goods_nm")
     private String goodsNm;
-    @Column(name = "goods_cont") // 상품설명
+    @ApiModelProperty(value = "상품설명", position = 3)
+    @Column(name = "goods_cont")
     private String goodsCont;
-    @Column(name = "com_id") // 업체 아이디
+    @ApiModelProperty(value = "업체 아이디", position = 4)
+    @Column(name = "com_id")
     private String comId;
-    @Column(name = "reg_dm") // 상품정보 최초등록일시
+    @ApiModelProperty(value = "상품정보 최초등록일시", position = 5)
+    @Column(name = "reg_dm")
     private LocalDateTime regDm;
-    @Column(name = "upd_dm") // 상품정보 수정일시
+    @ApiModelProperty(value = "상품정보 수정일시", position = 6)
+    @Column(name = "upd_dm")
     private LocalDateTime updDm;
 }
