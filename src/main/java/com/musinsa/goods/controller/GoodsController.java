@@ -3,6 +3,8 @@ package com.musinsa.goods.controller;
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.service.GoodsService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +34,8 @@ public class GoodsController {
      */
     @ApiOperation(value = "상품 등록/수정", response = Goods.class, notes = "상품을 등록 및 수정할 수 있습니다.")
     @PostMapping(value = "/v1/goods")
-    public void saveGoods(Goods goods) { // TODO : @Valid
-        goodsService.saveGoods(goods);
+    public Long saveGoods(final Goods goods) { // TODO : @Valid
+        return goodsService.saveGoods(goods);
     }
 
     /**
@@ -42,6 +44,7 @@ public class GoodsController {
      * @return
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "상품 번호를 통해 해당 상품의 상품 정보를 조회할 수 있습니다.")
+    @ApiImplicitParam(name = "goodsNo", required = true, dataType = "long", paramType = "path", value = "상품번호", defaultValue = "1")
     @GetMapping(value = "/v1/goods/{goodsNo}")
     public Goods findByGoodsNo(@PathVariable("goodsNo") Long goodsNo) {
         return goodsService.findByGoodsNo(goodsNo);
@@ -53,6 +56,9 @@ public class GoodsController {
      * @return
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "업체 아이디를 통해 해당 업체의 상품 정보를 조회할 수 있습니다.")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", defaultValue = "test1")
+    })
     @GetMapping(value = "/v1/companyGoods/{comId}")
     public List<Goods> findByComId(@PathVariable("comId") String comId) {
         return goodsService.findByComId(comId);

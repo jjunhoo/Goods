@@ -1,4 +1,4 @@
-package com.musinsa.goods.config;
+package com.musinsa.goods.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

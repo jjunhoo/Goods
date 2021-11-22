@@ -1,6 +1,8 @@
 package com.musinsa.goods.service;
 
+import com.musinsa.goods.config.constants.ExceptionCode;
 import com.musinsa.goods.domain.Goods;
+import com.musinsa.goods.exception.BusinessLogicException;
 import com.musinsa.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,15 +21,22 @@ public class GoodsService {
      * 상품 등록 및 수정
      * @param goods
      */
-    public void saveGoods(Goods goods) {
-        // TODO : 상품번호가 없는 경우 - 등록, 상품번호가 있는 경우 - 수정
-        /*if (goods.getGoodsNo()) {
+    @Transactional
+    public Long saveGoods(final Goods goods) {
+        LocalDateTime localDateTime = LocalDateTime.now();
 
-        }*/
-        goods.setRegDm(LocalDateTime.now());
-        goods.setUpdDm(LocalDateTime.now());
-
-        goodsRepository.save(goods);
+        if (goods.getGoodsNo() == null) { // 상품 등록
+            goods.setRegDm(localDateTime);
+            goods.setUpdDm(localDateTime);
+            return goodsRepository.save(goods).getGoodsNo();
+        } else { // 상품 수정
+            Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001); }); // TODO : 예외 처리 (커스텀 Exception)
+            goodsInfo.setGoodsNm(goods.getGoodsNm());
+            goodsInfo.setGoodsCont(goods.getGoodsCont());
+            goodsInfo.setComId(goods.getComId());
+            goodsInfo.setUpdDm(localDateTime);
+            return goodsInfo.getGoodsNo();
+        }
     }
 
     /**
@@ -36,7 +45,8 @@ public class GoodsService {
      * @return
      */
     public Goods findByGoodsNo(Long goodsNo) {
-        return goodsRepository.findById(goodsNo).orElseThrow(); // TODO : 예외 처리 (커스텀 Exception)
+        System.out.println("[findByGoodsNo] : " + goodsNo);
+        return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001); }); // TODO : 예외 처리 (커스텀 Exception)
     }
 
     /**
@@ -45,6 +55,7 @@ public class GoodsService {
      * @return
      */
     public List<Goods> findByComId(String comId) {
-        return goodsRepository.findByComId(comId).orElseThrow(); // TODO : 예외 처리 (커스텀 Exception)
+        System.out.println("[findByComId] : " + comId);
+        return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); }); // TODO : 예외 처리 (커스텀 Exception)
     }
 }
