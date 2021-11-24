@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +21,7 @@ public class Goods {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Pattern(regexp = PatternConstants.NUMBER_FORMAT, message = PatternConstants.NUMBER_MSG)
     // TODO : @Size
+    @Size(max = 11)
     @Column(name = "goods_no")
     private Long goodsNo;
 

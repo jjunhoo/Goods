@@ -45,7 +45,6 @@ public class GoodsService {
      * @return
      */
     public Goods findByGoodsNo(Long goodsNo) {
-        System.out.println("[findByGoodsNo] : " + goodsNo);
         return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001); }); // TODO : 예외 처리 (커스텀 Exception)
     }
 
@@ -55,7 +54,6 @@ public class GoodsService {
      * @return
      */
     public List<Goods> findByComId(String comId) {
-        System.out.println("[findByComId] : " + comId);
         return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); }); // TODO : 예외 처리 (커스텀 Exception)
     }
 }
