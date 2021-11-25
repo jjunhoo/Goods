@@ -1,8 +1,8 @@
 package com.musinsa.goods.service;
 
-import com.musinsa.goods.config.constants.ExceptionCode;
+import com.musinsa.goods.common.constants.ExceptionCode;
 import com.musinsa.goods.domain.Goods;
-import com.musinsa.goods.exception.BusinessLogicException;
+import com.musinsa.goods.common.exception.BusinessLogicException;
 import com.musinsa.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class GoodsService {
             goods.setUpdDm(localDateTime);
             return goodsRepository.save(goods).getGoodsNo();
         } else { // 상품 수정
-            Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001); }); // TODO : 예외 처리 (커스텀 Exception)
+            Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); });
             goodsInfo.setGoodsNm(goods.getGoodsNm());
             goodsInfo.setGoodsCont(goods.getGoodsCont());
             goodsInfo.setComId(goods.getComId());
@@ -45,7 +45,7 @@ public class GoodsService {
      * @return
      */
     public Goods findByGoodsNo(Long goodsNo) {
-        return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001); }); // TODO : 예외 처리 (커스텀 Exception)
+        return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); });
     }
 
     /**
@@ -54,6 +54,6 @@ public class GoodsService {
      * @return
      */
     public List<Goods> findByComId(String comId) {
-        return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); }); // TODO : 예외 처리 (커스텀 Exception)
+        return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1003); });
     }
 }

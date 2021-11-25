@@ -1,6 +1,6 @@
 package com.musinsa.goods.domain;
 
-import com.musinsa.goods.config.constants.PatternConstants;
+import com.musinsa.goods.common.constants.PatternConstants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
@@ -19,9 +19,8 @@ import java.time.LocalDateTime;
 public class Goods {
     @ApiModelProperty(value = "상품번호", position = 1)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Pattern(regexp = PatternConstants.NUMBER_FORMAT, message = PatternConstants.NUMBER_MSG)
+    // @Pattern(regexp = PatternConstants.NUMBER_FORMAT, message = PatternConstants.NUMBER_MSG)
     // TODO : @Size
-    @Size(max = 11)
     @Column(name = "goods_no")
     private Long goodsNo;
 

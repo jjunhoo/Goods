@@ -1,4 +1,4 @@
-package com.musinsa.goods.config.constants;
+package com.musinsa.goods.common.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public enum ExceptionCode {
-
-    ERROR_CODE_1001("1001", "존재하지 않는 상품번호입니다."),
-    ERROR_CODE_1002("1002", "존재하지 않는 업체 아이디입니다.")
+    ERROR_CODE_1001("1001", "존재하지 않는 %s 입니다."),
+    ERROR_CODE_1002("1002", "존재하지 않는 상품번호입니다."),
+    ERROR_CODE_1003("1003", "존재하지 않는 업체 아이디입니다.")
     ;
 
     @Getter
