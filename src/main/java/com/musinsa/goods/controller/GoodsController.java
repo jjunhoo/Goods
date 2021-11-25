@@ -19,16 +19,18 @@ public class GoodsController {
     private final GoodsService goodsService;
 
     /* TODO : 요구사항
-     * 1. 샘플 스키마를 참고하여 스키마 완성
-     * 2. API 버저닝 고려
+     * 1. (완료) 샘플 스키마를 참고하여 스키마 완성
+     *  - TODO : 기타 테이블 추가 생성 고민
+     * 2. (완료) API 버저닝 고려
      *  - https://restfulapi.net/versioning/
      *  - https://www.baeldung.com/rest-versioning
-     *  - v1 / v2
+     *  - 2-1. End-Point Versioning > v1 / v2
+     *  - 2-2. Http Header Versioning
      * 3. 비정상적인 API 호출에 대해 에러 처리가 고려되어야 함 (throttling)
      *  - https://gardeny.tistory.com/44 (호출 횟수 제한)
      *  - https://javacan.tistory.com/entry/ratelimiter-ratelimitj-bucket4j-intro (RateLimiter, RateLimitJ, Bucket4j)
      *  - https://happyer16.tistory.com/entry/API-rate-limiting-request-throttling-%EA%B0%9C%EB%B0%9C%ED%95%98%EA%B8%B0 (Guava > Redis - API rate-limiting)
-     *  - CSRF (무차별 Request)
+     *  - 3-1. CSRF (무차별 Request)
      * 4. 상품 API 가 저장되는 저장소 혹은 방식은 추후 변경될 수 있다는 가정 필요
      * 5. 인증은 고려하지 않는다.
      */
@@ -62,7 +64,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "업체 아이디를 통해 해당 업체의 상품 정보를 조회할 수 있습니다.")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", defaultValue = "test1")
+        @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", defaultValue = "test2")
     })
     @GetMapping(value = "/v1/companyGoods/{comId}")
     public List<Goods> findByComId(@PathVariable("comId") String comId) {
