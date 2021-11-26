@@ -5,8 +5,9 @@ import com.musinsa.goods.common.util.ErrorResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -64,12 +65,53 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    /*@ExceptionHandler(MissingServletRequestParameterException.class)
-    protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        ErrorResponse errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_1006.getErrorMessage(), ExceptionCode.ERROR_CODE_1006.getErrorCode());
+    /**
+     * MethodArgumentNotValidException
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        StringBuilder errorMessage = new StringBuilder();
+        FieldError fieldError = e.getBindingResult().getFieldError();
+
+        ErrorResponse errorResponse;
+
+        String errorCode;
+        String codeType;
+        String errorDefaultMessage;
+        Object[] errorArguments;
+
+        if (fieldError != null) {
+            codeType = fieldError.getCode();
+            errorDefaultMessage = fieldError.getDefaultMessage();
+            errorArguments = fieldError.getArguments();
+
+            Object errorArgument = errorArguments.length > 1 ? errorArguments[1] : "";
+
+            switch (codeType) {
+                case "NotEmpty":
+                    errorCode = ExceptionCode.ERROR_CODE_1006.getErrorCode();
+                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_1006.getErrorMessage());
+                    errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
+                    break;
+                case "Size":
+                    errorCode = ExceptionCode.ERROR_CODE_1010.getErrorCode();
+                    errorMessage.append("(").append(errorDefaultMessage).append(") ");
+                    errorMessage.append(errorArgument).append(ExceptionCode.ERROR_CODE_1010.getErrorMessage());
+                    errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
+                    break;
+                default:
+                    errorCode = ExceptionCode.ERROR_CODE_1008.getErrorCode();
+                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_1008.getErrorMessage());
+                    errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
+            }
+        } else {
+            errorResponse = new ErrorResponse(ExceptionCode.SYS_ERROR_CODE_9000.getErrorMessage(), ExceptionCode.SYS_ERROR_CODE_9000.getErrorCode());
+        }
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
-    }*/
+    }
 
     // TODO : 400 - Bad Request
 
@@ -82,5 +124,15 @@ public class GlobalExceptionHandler {
      */
     private static String replaceErrorMessage(String errorMessage, String message) {
         return StringUtils.isBlank(message) ? errorMessage : errorMessage.replace("%s", message);
+    }
+
+    /**
+     * 에러 메시지 Convert
+     * @param keyName
+     * @param errorMessage
+     * @return
+     */
+    private static String getDetailErrorMsg(final String keyName, final String errorMessage) {
+        return "(" + keyName + ")" + errorMessage;
     }
 }
