@@ -1,9 +1,19 @@
 # 상품 등록/조회 REST API
 
-### 1. Swagger
+### 1. 사용 스택
+- Java
+- Spring Boot
+- JPA
+- Swagger
+
+### 2. 사용법
+- 프로젝트 Clone
+- GoodsApplication 실행 (script-sql > schema.sql, data.sql 추가)
+
+### 3. Swagger
 - Swagger : http://localhost:8080/swagger-ui.html
 
-### 2. API 
+### 4. API 
 - 상품 조회 (Param : 업체 아이디) : GET
    ```HTTP
    http://localhost:8080/v1/companyGoods/{comId}
@@ -28,16 +38,18 @@
     2. 상품번호를 입력하지 않거나, 0으로 입력하여 API 를 호출하는 경우, 등록
     ```json
        {
-         "goodsNo": 0,
-         "goodsNm": "[테스트]상품명",
-         "goodsCont": "[테스트]상품설명",
-         "comId": "companyId1"
+          "goodsNm": "[테스트]상품명",
+          "goodsCont": "[테스트]상품설명",
+          "comId": "companyId1"
        }
+       
        또는
+     
        {
-         "goodsNm": "[테스트]상품명",
-         "goodsCont": "[테스트]상품설명",
-         "comId": "companyId1"
+          "goodsNo": 0,
+          "goodsNm": "[테스트]상품명",
+          "goodsCont": "[테스트]상품설명",
+          "comId": "companyId1"
        }
     ```
     * 인증 프로세스는 고려하지 않기 때문에 상품번호 존재 유무만 Validation  
