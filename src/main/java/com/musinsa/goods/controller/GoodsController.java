@@ -3,10 +3,7 @@ package com.musinsa.goods.controller;
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.service.GoodsService;
 import com.musinsa.goods.common.util.ResponseObject;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +41,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "상품 등록/수정", response = Goods.class, notes = "상품을 등록 및 수정할 수 있습니다.")
     @PostMapping(value = "/v1/goods")
-    public ResponseEntity<ResponseObject>  saveGoods(final @Valid Goods goods) { // TODO : 추후 @RequestBody 추가
+    public ResponseEntity<ResponseObject> saveGoods(final @Valid @RequestBody Goods goods) { // TODO : 추후 @RequestBody 추가
         ResponseObject responseObject = new ResponseObject().of(goodsService.saveGoods(goods));
 
         return new ResponseEntity<>(responseObject, HttpStatus.OK);

@@ -10,37 +10,37 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @ApiModel(value = "상품 정보")
 @Table(name = "goods")
-public class Goods {
+public class Goods implements Serializable {
+    // TODO : @Size
+    // TODO : // @Pattern(regexp = PatternConstants.NUMBER_FORMAT, message = PatternConstants.NUMBER_MSG)
     @ApiModelProperty(value = "상품번호", position = 1)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Pattern(regexp = PatternConstants.NUMBER_FORMAT, message = PatternConstants.NUMBER_MSG)
-    // TODO : @Size
     @Column(name = "goods_no")
     private Long goodsNo;
 
+    // TODO : 업체 상품 번호
+    /*@ApiModelProperty(value = "업체상품번호", position = 7)
+    private String comGoodsNo;*/
+
     @ApiModelProperty(value = "상품명", required = true, position = 2)
     @NotEmpty(message = "상품명")
-    // TODO : @Size
-    // @Pattern(regexp = PatternConstants.ENG_NUMBER_FORMAT, message = PatternConstants.ENG_NUMBER_MSG) // TODO :
     @Column(name = "goods_nm")
-    // TODO : Bean Validation 추가 > Trouble Shouting > The annotation @NotEmpty is disallowed for this data type > @NotEmpty(message = "상품설명")
     private String goodsNm;
 
     @ApiModelProperty(value = "상품설명", required = true, position = 3)
     @NotEmpty(message = "상품설명")
-    // TODO : @Size
     @Column(name = "goods_cont")
     private String goodsCont;
 
     @ApiModelProperty(value = "업체 아이디", required = true, position = 4)
     @NotEmpty(message = "업체 아이디")
-    // TODO : @Size
     @Column(name = "com_id")
     private String comId;
 

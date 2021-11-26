@@ -1,6 +1,7 @@
 package com.musinsa.goods.service;
 
 import com.musinsa.goods.common.constants.ExceptionCode;
+import com.musinsa.goods.common.constants.PatternConstants;
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.common.exception.BusinessLogicException;
 import com.musinsa.goods.repository.GoodsRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,10 @@ public class GoodsService {
             goods.setUpdDm(localDateTime);
             return goodsRepository.save(goods).getGoodsNo();
         } else { // 상품 수정
+            // TODO : 상품번호 > 숫자 문자열 패턴 체크
+            if (!Pattern.matches(PatternConstants.NUMBER_FORMAT, goods.getGoodsNo().toString())) {
+                throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1004, "숫자");
+            }
             Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); });
             goodsInfo.setGoodsNm(goods.getGoodsNm());
             goodsInfo.setGoodsCont(goods.getGoodsCont());
