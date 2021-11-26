@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,14 +17,14 @@ import java.time.LocalDateTime;
 @ApiModel(value = "상품 정보")
 @Table(name = "goods")
 public class Goods {
-    // TODO : @Size
     @ApiModelProperty(value = "상품번호", position = 1)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "goods_no")
-    private Long goodsNo;
+    private int goodsNo;
 
     @ApiModelProperty(value = "상품명", required = true, position = 2)
     @NotEmpty(message = "상품명")
+    @Size(max = 100, message = "상품명")
     @Column(name = "goods_nm")
     private String goodsNm;
 
@@ -34,6 +35,7 @@ public class Goods {
 
     @ApiModelProperty(value = "업체 아이디", required = true, position = 4)
     @NotEmpty(message = "업체 아이디")
+    @Size(max = 20, message = "업체 아이디")
     @Column(name = "com_id")
     private String comId;
 
