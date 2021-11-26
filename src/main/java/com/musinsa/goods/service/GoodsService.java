@@ -1,7 +1,7 @@
 package com.musinsa.goods.service;
 
 import com.musinsa.goods.common.constants.ExceptionCode;
-import com.musinsa.goods.common.constants.PatternConstants;
+import com.musinsa.goods.common.valid.ValidGoods;
 import com.musinsa.goods.domain.Goods;
 import com.musinsa.goods.common.exception.BusinessLogicException;
 import com.musinsa.goods.repository.GoodsRepository;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -24,23 +23,23 @@ public class GoodsService {
      * @param goods
      */
     @Transactional
-    public Long saveGoods(final Goods goods) {
+    public Integer saveGoods(final Goods goods) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        if (goods.getGoodsNo() == null) { // 상품 등록
+        if (goods.getGoodsNo() == 0) { // 상품 등록
             goods.setRegDm(localDateTime);
             goods.setUpdDm(localDateTime);
+
             return goodsRepository.save(goods).getGoodsNo();
         } else { // 상품 수정
-            // TODO : 상품번호 > 숫자 문자열 패턴 체크
-            if (!Pattern.matches(PatternConstants.NUMBER_FORMAT, goods.getGoodsNo().toString())) {
-                throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1004, "숫자");
-            }
-            Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); });
+            ValidGoods.validGoods(goods); // 상품 정보 Validation
+
+            Goods goodsInfo = goodsRepository.findById(goods.getGoodsNo()).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001, "상품번호"); });
             goodsInfo.setGoodsNm(goods.getGoodsNm());
             goodsInfo.setGoodsCont(goods.getGoodsCont());
             goodsInfo.setComId(goods.getComId());
             goodsInfo.setUpdDm(localDateTime);
+
             return goodsInfo.getGoodsNo();
         }
     }
@@ -50,8 +49,8 @@ public class GoodsService {
      * @param goodsNo
      * @return
      */
-    public Goods findByGoodsNo(Long goodsNo) {
-        return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1002); });
+    public Goods findByGoodsNo(Integer goodsNo) {
+        return goodsRepository.findById(goodsNo).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001, "상품번호"); });
     }
 
     /**
@@ -60,6 +59,6 @@ public class GoodsService {
      * @return
      */
     public List<Goods> findByComId(String comId) {
-        return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1003); });
+        return goodsRepository.findByComId(comId).orElseThrow(() -> { throw new BusinessLogicException(ExceptionCode.ERROR_CODE_1001, "업체 아이디"); });
     }
 }

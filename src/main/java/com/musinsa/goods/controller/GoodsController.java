@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 public class GoodsController {
+
     private final GoodsService goodsService;
 
     /**

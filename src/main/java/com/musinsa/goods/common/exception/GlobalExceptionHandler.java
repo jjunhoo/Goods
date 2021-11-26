@@ -152,6 +152,6 @@ public class GlobalExceptionHandler {
      * @return
      */
     private static String getDetailErrorMsg(final String keyName, final String errorMessage) {
-        return "(" + keyName + ")" + errorMessage;
+        return "(" + keyName + ") " + errorMessage;
     }
 }
