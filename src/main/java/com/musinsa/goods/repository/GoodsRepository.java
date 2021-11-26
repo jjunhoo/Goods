@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GoodsRepository extends JpaRepository<Goods, Long> {
+public interface GoodsRepository extends JpaRepository<Goods, Integer> {
     /**
      * 업체 아이디를 통한 상품 조회
      * @param comId
