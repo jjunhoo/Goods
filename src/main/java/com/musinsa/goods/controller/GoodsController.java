@@ -38,7 +38,7 @@ public class GoodsController {
      * @return
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "상품 번호를 통해 해당 상품의 상품 정보를 조회할 수 있습니다.")
-    @ApiImplicitParam(name = "goodsNo", required = true, dataType = "int", paramType = "path", value = "상품번호", defaultValue = "1")
+    @ApiImplicitParam(name = "goodsNo", required = true, dataType = "int", paramType = "path", value = "상품번호", example = "1", defaultValue = "1")
     @GetMapping(value = "/v1/goods/{goodsNo}")
     public ResponseEntity<ResponseObject> findByGoodsNo(@PathVariable("goodsNo") Integer goodsNo) {
         ResponseObject responseObject = new ResponseObject().of(goodsService.findByGoodsNo(goodsNo));
@@ -54,7 +54,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "업체 아이디를 통해 해당 업체의 상품 정보를 조회할 수 있습니다.")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", defaultValue = "test2")
+            @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", example = "test1", defaultValue = "test2")
     })
     @GetMapping(value = "/v1/companyGoods/{comId}")
     public ResponseEntity<ResponseObject> findByComId(@PathVariable("comId") String comId) {
