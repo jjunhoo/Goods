@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NumberFormatException.class)
     protected ResponseEntity<ErrorResponse> handleNumberFormatException(final NumberFormatException e) {
-        ErrorResponse errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_1005.getErrorMessage(), ExceptionCode.ERROR_CODE_1005.getErrorCode());
+        ErrorResponse errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_2001.getErrorMessage(), ExceptionCode.ERROR_CODE_2001.getErrorCode());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
@@ -93,19 +93,19 @@ public class GlobalExceptionHandler {
 
             switch (codeType) {
                 case "NotEmpty":
-                    errorCode = ExceptionCode.ERROR_CODE_1006.getErrorCode();
-                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_1006.getErrorMessage());
+                    errorCode = ExceptionCode.ERROR_CODE_2003.getErrorCode();
+                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_2003.getErrorMessage());
                     errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
                     break;
                 case "Size":
-                    errorCode = ExceptionCode.ERROR_CODE_1010.getErrorCode();
+                    errorCode = ExceptionCode.ERROR_CODE_2004.getErrorCode();
                     errorMessage.append("(").append(errorDefaultMessage).append(") ");
-                    errorMessage.append(errorArgument).append(ExceptionCode.ERROR_CODE_1010.getErrorMessage());
+                    errorMessage.append(errorArgument).append(ExceptionCode.ERROR_CODE_2004.getErrorMessage());
                     errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
                     break;
                 default:
-                    errorCode = ExceptionCode.ERROR_CODE_1008.getErrorCode();
-                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_1008.getErrorMessage());
+                    errorCode = ExceptionCode.ERROR_CODE_2002.getErrorCode();
+                    errorMessage.append("(").append(errorDefaultMessage).append(") ").append(ExceptionCode.ERROR_CODE_2002.getErrorMessage());
                     errorResponse = new ErrorResponse(errorMessage.toString(), errorCode);
             }
         } else {
@@ -126,9 +126,9 @@ public class GlobalExceptionHandler {
 
         if (e.getCause() instanceof JsonMappingException) {
             JsonMappingException ex = (JsonMappingException) e.getCause();
-            errorResponse = new ErrorResponse(GlobalExceptionHandler.getDetailErrorMsg(ex.getPath().get(0).getFieldName(), ExceptionCode.ERROR_CODE_1005.getErrorMessage()), ExceptionCode.ERROR_CODE_1005.getErrorCode());
+            errorResponse = new ErrorResponse(GlobalExceptionHandler.getDetailErrorMsg(ex.getPath().get(0).getFieldName(), ExceptionCode.ERROR_CODE_2001.getErrorMessage()), ExceptionCode.ERROR_CODE_2001.getErrorCode());
         } else {
-            errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_1005.getErrorMessage(), ExceptionCode.ERROR_CODE_1005.getErrorCode());
+            errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_2001.getErrorMessage(), ExceptionCode.ERROR_CODE_2001.getErrorCode());
         }
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
