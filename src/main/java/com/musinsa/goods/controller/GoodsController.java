@@ -37,9 +37,9 @@ public class GoodsController {
      * @return
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "상품 번호를 통해 해당 상품의 상품 정보를 조회할 수 있습니다.")
-    @ApiImplicitParam(name = "goodsNo", required = true, dataType = "long", paramType = "path", value = "상품번호", defaultValue = "1")
+    @ApiImplicitParam(name = "goodsNo", required = true, dataType = "int", paramType = "path", value = "상품번호", defaultValue = "1")
     @GetMapping(value = "/v1/goods/{goodsNo}")
-    public ResponseEntity<ResponseObject> findByGoodsNo(@PathVariable("goodsNo") Long goodsNo) {
+    public ResponseEntity<ResponseObject> findByGoodsNo(@PathVariable("goodsNo") Integer goodsNo) {
         ResponseObject responseObject = new ResponseObject().of(goodsService.findByGoodsNo(goodsNo));
 
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
