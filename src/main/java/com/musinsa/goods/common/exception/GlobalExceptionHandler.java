@@ -1,10 +1,12 @@
 package com.musinsa.goods.common.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.musinsa.goods.common.constants.ExceptionCode;
 import com.musinsa.goods.common.util.ErrorResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -113,7 +115,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    // TODO : 400 - Bad Request
+    /**
+     * HttpMessageNotReadableException
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        ErrorResponse errorResponse;
+
+        if (e.getCause() instanceof JsonMappingException) {
+            JsonMappingException ex = (JsonMappingException) e.getCause();
+            errorResponse = new ErrorResponse(GlobalExceptionHandler.getDetailErrorMsg(ex.getPath().get(0).getFieldName(), ExceptionCode.ERROR_CODE_1005.getErrorMessage()), ExceptionCode.ERROR_CODE_1005.getErrorCode());
+        } else {
+            errorResponse = new ErrorResponse(ExceptionCode.ERROR_CODE_1005.getErrorMessage(), ExceptionCode.ERROR_CODE_1005.getErrorCode());
+        }
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     /**
      * 에러 메시지 문자열 변환
@@ -127,7 +146,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 에러 메시지 Convert
+     * 에러 메시지 - 필드명 추가
      * @param keyName
      * @param errorMessage
      * @return
