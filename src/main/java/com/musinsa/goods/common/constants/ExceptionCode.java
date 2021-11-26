@@ -8,15 +8,16 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public enum ExceptionCode {
+    SYS_ERROR_CODE_9000("9000", "시스템 에러 : 관리자에게 문의해 주세요."),
     SYS_ERROR_CODE_9001("9001", "잘못된 URL을 호출 하였습니다."),
     SYS_ERROR_CODE_9002("9002", "Http Method가 잘못 되었습니다."),
 
     ERROR_CODE_1001("1001", "존재하지 않는 %s 입니다."),
-    ERROR_CODE_1002("1002", "존재하지 않는 상품번호입니다."),
-    ERROR_CODE_1003("1003", "존재하지 않는 업체 아이디입니다."),
-    ERROR_CODE_1004("1004", "상품번호는 %s만 입력 가능합니다."),
-    ERROR_CODE_1005("1005", "파라미터 타입 오류입니다."),
-    ERROR_CODE_1006("1006", "필수값을 입력해주세요")
+
+    ERROR_CODE_2001("2001", "파라미터 타입 오류입니다."),
+    ERROR_CODE_2002("2002", "파라미터 유효성 검사 오류입니다."),
+    ERROR_CODE_2003("2003", "필수값을 입력해주세요"),
+    ERROR_CODE_2004("2004", "자 이하로 입력해주세요.")
     ;
 
     @Getter
