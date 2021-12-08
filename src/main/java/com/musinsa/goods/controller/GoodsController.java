@@ -53,9 +53,7 @@ public class GoodsController {
      * @return
      */
     @ApiOperation(value = "상품 조회", response = Goods.class, notes = "업체 아이디를 통해 해당 업체의 상품 정보를 조회할 수 있습니다.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", example = "test2", defaultValue = "test2")
-    })
+    @ApiImplicitParam(name = "comId", required = true, dataType = "string", paramType = "path", value = "업체 아이디", example = "test2", defaultValue = "test2")
     @GetMapping(value = "/v1/companyGoods/{comId}")
     public ResponseEntity<ResponseObject> findByComId(@PathVariable("comId") String comId) {
         ResponseObject responseObject = new ResponseObject().of(goodsService.findByComId(comId));
