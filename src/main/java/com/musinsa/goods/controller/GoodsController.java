@@ -25,7 +25,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "상품 등록/수정", response = Goods.class, notes = "상품을 등록 및 수정할 수 있습니다.")
     @PostMapping(value = "/v1/goods")
-    public ResponseEntity<ResponseObject> saveGoods(final @Valid @RequestBody Goods goods) {
+    public ResponseEntity<ResponseObject> saveGoods(final @RequestBody @Valid Goods goods) {
         ResponseObject responseObject = new ResponseObject().of(goodsService.saveGoods(goods));
 
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
