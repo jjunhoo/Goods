@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public enum ExceptionCode {
-    SYS_ERROR_CODE_9000("9000", "시스템 에러 : 관리자에게 문의해 주세요."),
-    SYS_ERROR_CODE_9001("9001", "잘못된 URL을 호출 하였습니다."),
-    SYS_ERROR_CODE_9002("9002", "Http Method가 잘못 되었습니다."),
+    SYS_ERROR_CODE_9000("9000", "시스템 에러 : 관리자에게 문의해주세요."),
+    SYS_ERROR_CODE_9001("9001", "잘못된 URL 을 호출 하였습니다."),
+    SYS_ERROR_CODE_9002("9002", "HTTP Method 가 잘못되었습니다."),
 
     ERROR_CODE_1001("1001", "존재하지 않는 %s 입니다."),
 
