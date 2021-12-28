@@ -35,7 +35,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .apiInfo(apiInfo());
     }
 
-    // http://localhost:8080/swagger-ui.html
+    // swagger - http://localhost:8080/swagger-ui.html
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Musinsa Goods API")
